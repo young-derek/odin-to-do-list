@@ -1,5 +1,3 @@
-import { toggleModal } from './toggle-input-modal';
-
 export const createPageLayout = () => {
     // MAIN CONTAINER
     const body = document.querySelector('body');
@@ -41,7 +39,7 @@ export const createPageLayout = () => {
     const copyrightInfo = document.createElement('p');
 
     // TASK MODAL SECTION
-    const taskModal = document.createElement('div');
+    const taskModal = document.createElement('form');
     const taskModalTitle = document.createElement('h2');
     const taskModalTextInputContainer = document.createElement('div');
     const taskModalTextInput = document.createElement('input');
@@ -77,6 +75,8 @@ export const createPageLayout = () => {
     taskModalPriority.id = 'task-modal-priority';
     taskModalDetails.id = 'task-modal-details';
 
+    taskModal.classList.add('inactive');
+
     taskModalTextInput.setAttribute('type', 'text');
     taskModalTextLabel.setAttribute('for', 'task-modal-text-input');
     taskModalDateInput.setAttribute('type', 'date');
@@ -85,7 +85,7 @@ export const createPageLayout = () => {
     taskModalPriority.setAttribute('name', 'task-modal-priority');
 
     // NEW PROJECT MODAL SECTION
-    const projectModal = document.createElement('div');
+    const projectModal = document.createElement('form');
     const projectModalTitle = document.createElement('h2');
     const projectModalTextInputContainer = document.createElement('div');
     const projectModalTextInput = document.createElement('input');
@@ -97,6 +97,8 @@ export const createPageLayout = () => {
     projectModalTextInput.id = 'project-modal-text-input';
     btnProjectModalSubmit.id = 'btn-project-modal-submit';
     btnProjectModalCancel.id = 'btn-project-modal-cancel';
+
+    projectModal.classList.add('inactive');
 
     projectModalTextLabel.setAttribute('for', 'project-modal-text-input');
     btnProjectModalSubmit.textContent = 'Submit';
@@ -145,4 +147,5 @@ export const createPageLayout = () => {
         btnProjectModalCancel
     );
     footer.append(copyrightInfo);
+
 };
