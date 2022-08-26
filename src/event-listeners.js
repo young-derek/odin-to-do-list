@@ -1,3 +1,5 @@
+import * as Utility from './utility';
+
 export const addEventListeners = () => {
     // Define variables for modals
     const taskModal = document.querySelector('#task-modal');
@@ -17,12 +19,15 @@ export const addEventListeners = () => {
 
 
     console.log(addNewProject);
-    // display task modal
+    // display project modal
     addNewProject.addEventListener('click', () => {
-        projectModal.classList.toggle('inactive');
+        Utility.toggleModal(projectModal);
     });
 
     // display project modal
+    addNewTask.addEventListener('click', () => {
+        Utility.toggleModal(taskModal);
+    });
 
     // submit new project
 
