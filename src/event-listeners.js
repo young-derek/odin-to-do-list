@@ -1,4 +1,8 @@
 import * as Utility from './utility';
+import { Project } from './project';
+import { Task } from './task';
+
+
 
 export const addEventListeners = () => {
     // Define variables for modals
@@ -17,8 +21,6 @@ export const addEventListeners = () => {
     const submitNewTask = document.querySelector('#btn-task-modal-submit');
     const cancelNewTask = document.querySelector('#btn-task-modal-cancel');
 
-
-    console.log(addNewProject);
     // display project modal
     addNewProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
@@ -29,11 +31,23 @@ export const addEventListeners = () => {
         Utility.toggleModal(taskModal);
     });
 
+    // select a project
+
+    // 
+
     // submit new project
 
     // cancel new project
 
     // add new task
+    submitNewTask.addEventListener('click', () => {
+        // create new task object
+        // append to an array
+
+        
+        // need to find array to append to... anonymous function?
+        // 
+    });
 
     // cancel new task
 
