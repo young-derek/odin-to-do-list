@@ -90,6 +90,9 @@ export const createPageLayout = () => {
     const projectModalTextInputContainer = document.createElement('div');
     const projectModalTextInput = document.createElement('input');
     const projectModalTextLabel = document.createElement('label');
+    const projectModalDateContainer = document.createElement('div');
+    const projectModalDateInput = document.createElement('input');
+    const projectModalDateLabel = document.createElement('label');
     const btnProjectModalSubmit = document.createElement('button');
     const btnProjectModalCancel = document.createElement('button');
 
@@ -97,14 +100,18 @@ export const createPageLayout = () => {
     projectModalTextInput.id = 'project-modal-text-input';
     btnProjectModalSubmit.id = 'btn-project-modal-submit';
     btnProjectModalCancel.id = 'btn-project-modal-cancel';
+    projectModalDateInput.id = 'project-modal-date-input';
 
     projectModal.classList.add('inactive');
 
     projectModalTextLabel.setAttribute('for', 'project-modal-text-input');
+    projectModalDateLabel.setAttribute('for', 'project-modal-date-input');
     btnProjectModalSubmit.textContent = 'Submit';
     btnProjectModalCancel.textContent = 'Cancel';
-
     projectModalTitle.textContent = 'New Project: ';
+    projectModalDateLabel.textContent = 'Due Date: ';
+    projectModalTextLabel.textContent = 'Name: ';
+    projectModalDateInput.setAttribute('type', 'date');
 
     // APPEND SECTION
     body.append(mainContainer);
@@ -140,9 +147,11 @@ export const createPageLayout = () => {
         btnTaskModalCancel
     );
     projectModalTextInputContainer.append(projectModalTextLabel, projectModalTextInput);
+    projectModalDateContainer.append(projectModalDateLabel, projectModalDateInput);
     projectModal.append(
         projectModalTitle,
         projectModalTextInputContainer,
+        projectModalDateContainer,
         btnProjectModalSubmit,
         btnProjectModalCancel
     );
