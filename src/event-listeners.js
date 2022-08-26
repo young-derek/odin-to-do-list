@@ -1,8 +1,7 @@
 import * as Utility from './utility';
 import { Project } from './project';
 import { Task } from './task';
-
-
+import { toDoList } from '.';
 
 export const addEventListeners = () => {
     // Define variables for modals
@@ -21,6 +20,12 @@ export const addEventListeners = () => {
     const submitNewTask = document.querySelector('#btn-task-modal-submit');
     const cancelNewTask = document.querySelector('#btn-task-modal-cancel');
 
+    // Variables for the task modal's input elements
+
+    // Variables for project and task list DOM nodes
+    const projectsList = document.querySelector('#projects-list');
+    const tasksList = document.querySelector('#tasks-list');
+
     // display project modal
     addNewProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
@@ -33,9 +38,31 @@ export const addEventListeners = () => {
 
     // select a project
 
-    // 
+    //
 
     // submit new project
+    submitNewProject.addEventListener('click', () => {
+        // Variables for the project modal's input elements
+        const projectTitle = document.querySelector(
+            '#project-modal-text-input'
+        );
+        const projectDueDate = document.querySelector(
+            '#project-modal-date-input'
+        );
+
+        // Create new project with values currently in the project form
+        const newProject = Project(projectTitle.value, projectDueDate.value);
+
+        // Push new project to the to do list array
+        toDoList.push(newProject);
+        console.log(toDoList);
+
+        // Refresh the project list
+        Utility.refreshProjectsDisplay(toDoList, projectsList);
+
+        // Toggle off the project modal
+        Utility.toggleModal(projectModal);
+    });
 
     // cancel new project
 
@@ -43,10 +70,8 @@ export const addEventListeners = () => {
     submitNewTask.addEventListener('click', () => {
         // create new task object
         // append to an array
-
-        
         // need to find array to append to... anonymous function?
-        // 
+        //
     });
 
     // cancel new task

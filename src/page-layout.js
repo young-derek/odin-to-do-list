@@ -85,6 +85,8 @@ export const createPageLayout = () => {
     taskModalDateLabel.setAttribute('for', 'task-modal-date-input');
     taskModalPriorityLabel.setAttribute('for', 'task-modal-priority');
     taskModalPriority.setAttribute('name', 'task-modal-priority');
+    btnTaskModalSubmit.type = 'button';
+    btnTaskModalCancel.type = 'button';
 
     // NEW PROJECT MODAL SECTION
     const projectModal = document.createElement('form');
@@ -108,11 +110,13 @@ export const createPageLayout = () => {
 
     projectModalTextLabel.setAttribute('for', 'project-modal-text-input');
     projectModalDateLabel.setAttribute('for', 'project-modal-date-input');
+    btnProjectModalSubmit.type = 'button';
+    btnProjectModalCancel.type = 'button';
     btnProjectModalSubmit.textContent = 'Submit';
     btnProjectModalCancel.textContent = 'Cancel';
     projectModalTitle.textContent = 'New Project: ';
     projectModalDateLabel.textContent = 'Due Date: ';
-    projectModalTextLabel.textContent = 'Name: ';
+    projectModalTextLabel.textContent = 'Title: ';
     projectModalDateInput.setAttribute('type', 'date');
 
     // APPEND SECTION
