@@ -12,10 +12,13 @@ export const createPageLayout = () => {
     pageTitle.textContent = 'To Do List!';
 
     // PROJECTS SECTION
+    const allTasksTitle = document.createElement('h2');
     const projectsSection = document.createElement('section');
     const projectsTitle = document.createElement('h2');
     const projectsList = document.createElement('ul');
     const btnAddProject = document.createElement('button');
+    allTasksTitle.textContent = 'View All Tasks';
+    allTasksTitle.classList.add('section-title');
     projectsTitle.textContent = 'Projects:';
     projectsTitle.classList.add('section-title');
     projectsSection.id = 'projects-section';
@@ -37,41 +40,109 @@ export const createPageLayout = () => {
     const footer = document.createElement('footer');
     const copyrightInfo = document.createElement('p');
 
-    // MODAL SECTION
-    const modal = document.createElement('div');
-    const modalTitle = document.createElement('h2');
-    const modalTextInputContainer = document.createElement('div');
-    const modalTextInput = document.createElement('input');
-    const modalTextLabel = document.createElement('label');
-    const modalDateInputContainer = document.createElement('div');
-    const modalDateInput = document.createElement('input');
-    const modalDateLabel = document.createElement('label');
-    const btnModalSubmit = document.createElement('button');
-    const btnModalCancel = document.createElement('button');
+    // TASK MODAL SECTION
+    const taskModal = document.createElement('div');
+    const taskModalTitle = document.createElement('h2');
+    const taskModalTextInputContainer = document.createElement('div');
+    const taskModalTextInput = document.createElement('input');
+    const taskModalTextLabel = document.createElement('label');
+    const taskModalDateInputContainer = document.createElement('div');
+    const taskModalDateInput = document.createElement('input');
+    const taskModalDateLabel = document.createElement('label');
+    const btnTaskModalSubmit = document.createElement('button');
+    const btnTaskModalCancel = document.createElement('button');
+    const taskModalPriorityContainer = document.createElement('div');
+    const taskModalPriorityLabel = document.createElement('label');
+    const taskModalPriority = document.createElement('select');
+    const taskModalDetails = document.createElement('textarea');
 
-    modalTitle.textContent = 'new project/task';
-    btnModalSubmit.textContent = 'submit';
-    btnModalCancel.textContent = 'cancel';
+    taskModalPriority.innerHTML = `
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+    `;
 
-    modal.id = 'modal';
-    modalDateInput.id = 'modal-date-input';
-    modalTextInput.id = 'modal-text-input';
-    btnModalSubmit.id = 'btn-modal-submit';
-    btnModalCancel.id = 'btn-modal-cancel';
+    taskModalTitle.textContent = 'New Task:';
+    btnTaskModalSubmit.textContent = 'Submit';
+    btnTaskModalCancel.textContent = 'Cancel';
+    taskModalPriorityLabel.textContent = 'Task priority: ';
+    taskModalDateLabel.textContent = 'Date: ';
+    taskModalTextLabel.textContent = 'Task: ';
 
-    modalTextInput.setAttribute('type', 'text');
-    modalTextLabel.setAttribute('for', 'modal-text-input');
-    modalDateInput.setAttribute('type', 'date')
-    modalDateLabel.setAttribute('for', 'modal-date-input');
+    taskModal.id = 'task-modal';
+    taskModalDateInput.id = 'task-modal-date-input';
+    taskModalTextInput.id = 'task-modal-text-input';
+    btnTaskModalSubmit.id = 'btn-task-modal-submit';
+    btnTaskModalCancel.id = 'btn-task-modal-cancel';
+    taskModalPriority.id = 'task-modal-priority';
+    taskModalDetails.id = 'task-modal-details';
+
+    taskModalTextInput.setAttribute('type', 'text');
+    taskModalTextLabel.setAttribute('for', 'task-modal-text-input');
+    taskModalDateInput.setAttribute('type', 'date');
+    taskModalDateLabel.setAttribute('for', 'task-modal-date-input');
+    taskModalPriorityLabel.setAttribute('for', 'task-modal-priority');
+    taskModalPriority.setAttribute('name', 'task-modal-priority');
+
+    // NEW PROJECT MODAL SECTION
+    const projectModal = document.createElement('div');
+    const projectModalTitle = document.createElement('h2');
+    const projectModalTextInputContainer = document.createElement('div');
+    const projectModalTextInput = document.createElement('input');
+    const projectModalTextLabel = document.createElement('label');
+    const btnProjectModalSubmit = document.createElement('button');
+    const btnProjectModalCancel = document.createElement('button');
+
+    projectModal.id = 'project-modal';
+    projectModalTextInput.id = 'project-modal-text-input';
+    btnProjectModalSubmit.id = 'btn-project-modal-submit';
+    btnProjectModalCancel.id = 'btn-project-modal-cancel';
+
+    projectModalTextLabel.setAttribute('for', 'project-modal-text-input');
+    btnProjectModalSubmit.textContent = 'Submit';
+    btnProjectModalCancel.textContent = 'Cancel';
+
+    projectModalTitle.textContent = 'New Project: ';
 
     // APPEND SECTION
     body.append(mainContainer);
-    mainContainer.append(header, projectsSection, tasksSection, footer, modal);
+    mainContainer.append(
+        header,
+        projectsSection,
+        tasksSection,
+        footer,
+        taskModal,
+        projectModal
+    );
     header.append(pageTitle);
-    projectsSection.append(projectsTitle, btnAddProject, projectsList);
+    projectsSection.append(
+        allTasksTitle,
+        projectsTitle,
+        btnAddProject,
+        projectsList
+    );
     tasksSection.append(tasksTitle, btnAddTask, tasksList);
-    modalTextInputContainer.append(modalTextLabel, modalTextInput);
-    modalDateInputContainer.append(modalDateLabel, modalDateInput);
-    modal.append(modalTitle, modalTextInputContainer, modalDateInputContainer, btnModalSubmit, btnModalCancel);
+    taskModalTextInputContainer.append(taskModalTextLabel, taskModalTextInput);
+    taskModalDateInputContainer.append(taskModalDateLabel, taskModalDateInput);
+    taskModalPriorityContainer.append(
+        taskModalPriorityLabel,
+        taskModalPriority
+    );
+    taskModal.append(
+        taskModalTitle,
+        taskModalTextInputContainer,
+        taskModalDateInputContainer,
+        taskModalPriorityContainer,
+        taskModalDetails,
+        btnTaskModalSubmit,
+        btnTaskModalCancel
+    );
+    projectModalTextInputContainer.append(projectModalTextLabel, projectModalTextInput);
+    projectModal.append(
+        projectModalTitle,
+        projectModalTextInputContainer,
+        btnProjectModalSubmit,
+        btnProjectModalCancel
+    );
     footer.append(copyrightInfo);
 };
