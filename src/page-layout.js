@@ -20,6 +20,7 @@ export const createPageLayout = () => {
     projectsTitle.textContent = 'Projects:';
     projectsTitle.classList.add('section-title');
     projectsSection.id = 'projects-section';
+    projectsList.id = 'projects-list';
     btnAddProject.id = 'btn-add-project';
     btnAddProject.textContent = '+ Add New Project';
 
@@ -31,6 +32,7 @@ export const createPageLayout = () => {
     tasksTitle.classList.add('section-title');
     tasksTitle.textContent = 'Tasks:';
     tasksSection.id = 'tasks-section';
+    tasksList.id = 'tasks-list';
     btnAddTask.id = 'btn-add-task';
     btnAddTask.textContent = '+ Add New Task';
 
