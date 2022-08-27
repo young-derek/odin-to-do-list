@@ -10,13 +10,10 @@ export const createPageLayout = () => {
     pageTitle.textContent = 'To Do List!';
 
     // PROJECTS SECTION
-    const allTasksTitle = document.createElement('h2');
     const projectsSection = document.createElement('section');
     const projectsTitle = document.createElement('h2');
     const projectsList = document.createElement('ul');
     const btnAddProject = document.createElement('button');
-    allTasksTitle.textContent = 'View All Tasks';
-    allTasksTitle.classList.add('section-title');
     projectsTitle.textContent = 'Projects:';
     projectsTitle.classList.add('section-title');
     projectsSection.id = 'projects-section';
@@ -131,7 +128,6 @@ export const createPageLayout = () => {
     );
     header.append(pageTitle);
     projectsSection.append(
-        allTasksTitle,
         projectsTitle,
         btnAddProject,
         projectsList
