@@ -33,8 +33,10 @@ header h1 {
     grid-row: 2 / 3;
     grid-template-rows: auto auto 1fr;
 }
+
 #projects-section * {
     margin: 0.5rem;
+    transition: 0.3s;
 }
 
 #tasks-section {
@@ -90,4 +92,8 @@ footer {
 
 .inactive {
     visibility: hidden;
+}
+
+.project-selected {
+    background-color: var(--medium-neutral-color);
 }

@@ -51,7 +51,7 @@ export const createPageLayout = () => {
     const taskModalPriorityContainer = document.createElement('div');
     const taskModalPriorityLabel = document.createElement('label');
     const taskModalPriority = document.createElement('select');
-    const taskModalDetails = document.createElement('textarea');
+    const taskModalNotes = document.createElement('textarea');
 
     taskModalPriority.innerHTML = `
     <option value="low">Low</option>
@@ -72,7 +72,7 @@ export const createPageLayout = () => {
     btnTaskModalSubmit.id = 'btn-task-modal-submit';
     btnTaskModalCancel.id = 'btn-task-modal-cancel';
     taskModalPriority.id = 'task-modal-priority';
-    taskModalDetails.id = 'task-modal-details';
+    taskModalNotes.id = 'task-modal-notes';
 
     taskModal.classList.add('inactive');
 
@@ -144,7 +144,7 @@ export const createPageLayout = () => {
         taskModalTextInputContainer,
         taskModalDateInputContainer,
         taskModalPriorityContainer,
-        taskModalDetails,
+        taskModalNotes,
         btnTaskModalSubmit,
         btnTaskModalCancel
     );

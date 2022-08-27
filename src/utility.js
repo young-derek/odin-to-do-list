@@ -6,10 +6,12 @@ export const toggleModal = (modal) => {
     modal.reset();
 };
 
-// function to refresh list of projects
+// Function to refresh list of projects
 export const refreshProjectsDisplay = (projectsArray, projectsList) => {
     // Clear current projects displayed
     projectsList.innerHTML = '';
+    
+    // Append each project as a list item
     projectsArray.forEach((project) => {
         const listItem = document.createElement('li');
         listItem.textContent = project.title;

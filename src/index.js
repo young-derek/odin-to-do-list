@@ -11,6 +11,7 @@ export const toDoList = [Project('Default Project', 2022 - 10 - 10, [], true)];
     createPageLayout();
     addEventListeners();
 
+    const projectsList = document.querySelector('#projects-list');
     refreshProjectsDisplay(toDoList, projectsList);
 
 })();

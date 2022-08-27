@@ -4,11 +4,11 @@ import { Task } from './task';
 import { toDoList } from '.';
 
 export const addEventListeners = () => {
-    // Define variables for modals
+    // Variables for modals
     const taskModal = document.querySelector('#task-modal');
     const projectModal = document.querySelector('#project-modal');
 
-    // Define variables for each element to listen to
+    // Variables for buttons
     const addNewProject = document.querySelector('#btn-add-project');
     const addNewTask = document.querySelector('#btn-add-task');
     const submitNewProject = document.querySelector(
@@ -20,13 +20,14 @@ export const addEventListeners = () => {
     const submitNewTask = document.querySelector('#btn-task-modal-submit');
     const cancelNewTask = document.querySelector('#btn-task-modal-cancel');
 
-    // Variables for the task modal's input elements
-
     // Variables for project and task list DOM nodes
     const projectsList = document.querySelector('#projects-list');
     const tasksList = document.querySelector('#tasks-list');
 
-    // display project modal
+    // Variable to track selected project
+    const projectSelected = 0;
+
+    // Display project modal
     addNewProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
     });
@@ -36,11 +37,13 @@ export const addEventListeners = () => {
         Utility.toggleModal(taskModal);
     });
 
-    // select a project
+    // Select a project
+    projectsList.addEventListener('click', (event) => {
+        const projectsArray = Array.from(projectsList.children);
+        console.log(projectsArray.indexOf(event.target));
+    })
 
-    //
-
-    // submit new project
+    // Submit new project
     submitNewProject.addEventListener('click', () => {
         // Variables for the project modal's input elements
         const projectTitle = document.querySelector(
@@ -64,11 +67,19 @@ export const addEventListeners = () => {
         Utility.toggleModal(projectModal);
     });
 
-    // cancel new project
+    // Cancel new project
 
-    // add new task
+    // Add new task
     submitNewTask.addEventListener('click', () => {
+        // Variables for task modal inputs
+        const taskTitle = document.querySelector('#task-modal-text-input');
+        const taskDate = document.querySelector('#task-modal-date-input');
+        const taskPriority = document.querySelector('#task-modal-priority');
+        const taskNotes = document.querySelector('#task-modal-notes');
+
         // create new task object
+        const newTask = Task(taskTitle.value, taskDate.value, taskPriority.value, taskNotes.value);
+
         // append to an array
         // need to find array to append to... anonymous function?
         //
