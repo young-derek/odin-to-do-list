@@ -55,10 +55,6 @@ export const refreshTasksDisplay = () => {
         taskTitle.textContent = task.title;
         dueDate.textContent = task.dueDate;
 
-
-
-        
-
         // taskItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
         tasksList.append(taskItem);
     });

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @param {string} title Task title
  * @param {date} dueDate Task due date
  * @param {string} priority Task priority level
@@ -12,5 +12,5 @@ export const Task = (title, dueDate, priority, notes) => {
         dueDate: dueDate,
         priority: priority,
         notes: notes,
-    }
-}
+    };
+};
