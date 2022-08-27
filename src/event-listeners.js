@@ -3,6 +3,10 @@ import { Project } from './project';
 import { Task } from './task';
 import { toDoList } from '.';
 
+// Variable to track selected project
+export const projectSelected = 0;
+
+// Function to add all event listeners
 export const addEventListeners = () => {
     // Variables for modals
     const taskModal = document.querySelector('#task-modal');
@@ -24,9 +28,6 @@ export const addEventListeners = () => {
     const projectsList = document.querySelector('#projects-list');
     const tasksList = document.querySelector('#tasks-list');
 
-    // Variable to track selected project
-    const projectSelected = 0;
-
     // Display project modal
     addNewProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
@@ -41,7 +42,7 @@ export const addEventListeners = () => {
     projectsList.addEventListener('click', (event) => {
         const projectsArray = Array.from(projectsList.children);
         console.log(projectsArray.indexOf(event.target));
-    })
+    });
 
     // Submit new project
     submitNewProject.addEventListener('click', () => {
@@ -77,12 +78,22 @@ export const addEventListeners = () => {
         const taskPriority = document.querySelector('#task-modal-priority');
         const taskNotes = document.querySelector('#task-modal-notes');
 
-        // create new task object
-        const newTask = Task(taskTitle.value, taskDate.value, taskPriority.value, taskNotes.value);
+        // Create new task object
+        const newTask = Task(
+            taskTitle.value,
+            taskDate.value,
+            taskPriority.value,
+            taskNotes.value
+        );
 
-        // append to an array
-        // need to find array to append to... anonymous function?
-        //
+        // Append to the active project's task array
+        toDoList[projectSelected].tasks.push(newTask);
+
+        // refresh task list in the DOM
+        Utility.refreshTasksDisplay();
+
+        // Toggle modal visibility
+        Utility.toggleModal(taskModal);
     });
 
     // cancel new task
