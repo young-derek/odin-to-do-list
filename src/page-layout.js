@@ -1,3 +1,10 @@
+import * as Utility from './utility';
+import { Project } from './project';
+import { Task } from './task';
+import { toDoList } from '.';
+
+export let projectSelected = 0;
+
 export const createPageLayout = () => {
     // MAIN CONTAINER
     const body = document.querySelector('body');
@@ -21,6 +28,21 @@ export const createPageLayout = () => {
     btnAddProject.id = 'btn-add-project';
     btnAddProject.textContent = '+ Add New Project';
 
+    // Show add new project modal
+    btnAddProject.addEventListener('click', () => {
+        Utility.toggleModal(projectModal);
+    });
+
+    // Select a project in the DOM
+    projectsList.addEventListener('click', (event) => {
+        const projectsArray = Array.from(projectsList.children);
+        const projectClickedIndex = projectsArray.indexOf(event.target);
+        if (projectClickedIndex >= 0) {
+            projectSelected = projectClickedIndex;
+            Utility.refreshTasksDisplay();
+        }
+    });
+
     // TASKS SECTION
     const tasksSection = document.createElement('section');
     const tasksTitle = document.createElement('h2');
@@ -32,6 +54,10 @@ export const createPageLayout = () => {
     tasksList.id = 'tasks-list';
     btnAddTask.id = 'btn-add-task';
     btnAddTask.textContent = '+ Add New Task';
+
+    btnAddTask.addEventListener('click', () => {
+        Utility.toggleModal(taskModal);
+    });
 
     // FOOTER SECTION
     const footer = document.createElement('footer');
@@ -89,7 +115,27 @@ export const createPageLayout = () => {
     btnTaskModalSubmit.type = 'button';
     btnTaskModalCancel.type = 'button';
 
-    // NEW PROJECT MODAL SECTION
+    // Add new task
+    btnTaskModalSubmit.addEventListener('click', () => {
+        // Create new task object
+        const newTask = Task(
+            taskModalTextInput.value,
+            taskModalDateInput.value,
+            taskModalPriority.value,
+            taskModalNotes.value
+        );
+
+        // Append task object to the selected project's task array
+        toDoList[projectSelected].tasks.push(newTask);
+
+        // Refresh task list in the DOM
+        Utility.refreshTasksDisplay();
+
+        // Toggle modal visibility
+        Utility.toggleModal(taskModal);
+    });
+
+    // PROJECT MODAL SECTION
     const projectModal = document.createElement('form');
     const projectModalTitle = document.createElement('h2');
     const projectModalTextInputContainer = document.createElement('div');
@@ -120,6 +166,29 @@ export const createPageLayout = () => {
     projectModalTextLabel.textContent = 'Title: ';
     projectModalDateInput.setAttribute('type', 'date');
 
+    // Push a new project to the to do list and update the project list in the DOM
+    btnProjectModalSubmit.addEventListener('click', () => {
+        // Create new project with values currently in the project form
+        const newProject = Project(
+            projectModalTextInput.value,
+            projectModalDateInput.value
+        );
+
+        // Push new project to the to do list array
+        toDoList.push(newProject);
+
+        // Refresh the project list
+        Utility.refreshProjectsDisplay(toDoList, projectsList);
+
+        // Toggle off the project modal
+        Utility.toggleModal(projectModal);
+    });
+
+    // Cancel inputting a new project
+    btnProjectModalCancel.addEventListener('click', () => {
+        Utility.toggleModal(projectModal);
+    });
+
     // APPEND SECTION
     body.append(mainContainer);
     mainContainer.append(
@@ -131,11 +200,7 @@ export const createPageLayout = () => {
         projectModal
     );
     header.append(pageTitle);
-    projectsSection.append(
-        projectsTitle,
-        btnAddProject,
-        projectsList
-    );
+    projectsSection.append(projectsTitle, btnAddProject, projectsList);
     tasksSection.append(tasksTitle, btnAddTask, tasksList);
     taskModalTextInputContainer.append(taskModalTextLabel, taskModalTextInput);
     taskModalDateInputContainer.append(taskModalDateLabel, taskModalDateInput);
@@ -143,7 +208,7 @@ export const createPageLayout = () => {
         taskModalPriorityLabel,
         taskModalPriority
     );
-    taskModalNotesContainer.append(taskModalNotesLabel, taskModalNotes)
+    taskModalNotesContainer.append(taskModalNotesLabel, taskModalNotes);
     taskModal.append(
         taskModalTitle,
         taskModalTextInputContainer,
@@ -153,8 +218,14 @@ export const createPageLayout = () => {
         btnTaskModalSubmit,
         btnTaskModalCancel
     );
-    projectModalTextInputContainer.append(projectModalTextLabel, projectModalTextInput);
-    projectModalDateContainer.append(projectModalDateLabel, projectModalDateInput);
+    projectModalTextInputContainer.append(
+        projectModalTextLabel,
+        projectModalTextInput
+    );
+    projectModalDateContainer.append(
+        projectModalDateLabel,
+        projectModalDateInput
+    );
     projectModal.append(
         projectModalTitle,
         projectModalTextInputContainer,
@@ -163,5 +234,25 @@ export const createPageLayout = () => {
         btnProjectModalCancel
     );
     footer.append(copyrightInfo);
-
 };
+
+// cancel new task
+
+// delete project
+
+// delete task
+
+// edit task (bring up modal with task info filled in)
+
+// mark task complete
+
+// change task priority (low, medium, high)
+
+// display tasks by project
+
+// display all tasks
+
+//add'tl:
+// edit project name
+// sort tasks by due date
+// manually change order of tasks (drop down list w/ number of tasks in project);

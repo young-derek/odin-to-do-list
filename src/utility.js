@@ -1,5 +1,5 @@
 // File that contains the to do list functionality
-import { projectSelected } from './event-listeners';
+import { projectSelected } from './page-layout';
 import { toDoList } from '.';
 
 // Toggle modal visibility
@@ -36,10 +36,30 @@ export const refreshTasksDisplay = () => {
     // Append each task item for the current project to the DOM
     toDoList[projectSelected].tasks.forEach((task) => {
         const taskItem = document.createElement('li');
-        // checkbox, task title, due date, clickable priority to toggle, due date, expand button (to show textarea notes), edit button, remove button
+        // checkbox, task title, due date, expand button (to show textarea notes), edit button, remove button
         const checkbox = document.createElement('input');
+        const taskTitle = document.createElement('div');
+        const dueDate = document.createElement('div');
+        const expandButton = document.createElement('button');
+        const editButton = document.createElement('button');
+        const removeButton = document.createElement('button');
 
-        taskItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
+        taskItem.classList.add('task-item');
+        checkbox.classList.add('task-checkbox');
+        taskTitle.classList.add('task-title');
+        dueDate.classList.add('task-due-date');
+        expandButton.classList.add('task-expand-button');
+        editButton.classList.add('task-edit-button');
+        removeButton.classList.add('task-remove-button');
+
+        taskTitle.textContent = task.title;
+        dueDate.textContent = task.dueDate;
+
+
+
+        
+
+        // taskItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
         tasksList.append(taskItem);
     });
 };
