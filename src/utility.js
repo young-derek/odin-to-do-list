@@ -36,11 +36,11 @@ export const refreshTasksDisplay = () => {
     // Append each task item for the current project to the DOM
     toDoList[projectSelected].tasks.forEach((task) => {
         const taskItem = document.createElement('li');
-        // checkbox, task title, due date, expand button (to show textarea notes), edit button, remove button
         const checkbox = document.createElement('input');
         const taskTitle = document.createElement('div');
         const dueDate = document.createElement('div');
-        const expandButton = document.createElement('button');
+        const priority = document.createElement('div');
+        const notesButton = document.createElement('button');
         const editButton = document.createElement('button');
         const removeButton = document.createElement('button');
 
@@ -48,15 +48,48 @@ export const refreshTasksDisplay = () => {
         checkbox.classList.add('task-checkbox');
         taskTitle.classList.add('task-title');
         dueDate.classList.add('task-due-date');
-        expandButton.classList.add('task-expand-button');
+        priority.classList.add('task-priority');
+        notesButton.classList.add('task-notes-button');
         editButton.classList.add('task-edit-button');
         removeButton.classList.add('task-remove-button');
 
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.addEventListener('click', () => {
+            
+        });
+
         taskTitle.textContent = task.title;
         dueDate.textContent = task.dueDate;
+        priority.textContent = `${task.priority} Priority`;
+        notesButton.textContent = 'View Notes';
+        editButton.textContent = 'Edit';
+        removeButton.textContent = 'Remove';
 
-        // taskItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
-        tasksList.append(taskItem);
+        taskItem.append(
+            checkbox,
+            taskTitle,
+            dueDate,
+            priority,
+            notesButton,
+            editButton,
+            removeButton
+        );
+
+        // Create additional notes div
+        const taskNotesContainer = document.createElement('div');
+        taskNotesContainer.textContent = `Notes: ${task.notes}`;
+        taskNotesContainer.classList.add(
+            'task-notes-container',
+            'display-none'
+        );
+
+        notesButton.addEventListener('click', () => {
+            taskNotesContainer.classList.toggle('display-none');
+            console.log(taskNotesContainer.classList);
+        });
+
+        // Append both DOM elements
+        tasksList.append(taskItem, taskNotesContainer);
     });
 };
 

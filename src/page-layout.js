@@ -82,9 +82,9 @@ export const createPageLayout = () => {
     const taskModalNotes = document.createElement('textarea');
 
     taskModalPriority.innerHTML = `
-    <option value="low">Low</option>
-    <option value="medium">Medium</option>
-    <option value="high">High</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
     `;
 
     taskModalTitle.textContent = 'New Task:';
