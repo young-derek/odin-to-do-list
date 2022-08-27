@@ -33,7 +33,7 @@ export const refreshTasksDisplay = () => {
     // Append each task item for the current project to the DOM
     toDoList[projectSelected].tasks.forEach((task) => {
         const listItem = document.createElement('li');
-        listItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}`;
+        listItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
         tasksList.append(listItem);
     });
 };

@@ -4,7 +4,7 @@ import { Task } from './task';
 import { toDoList } from '.';
 
 // Variable to track selected project
-export const projectSelected = 0;
+export let projectSelected = 0;
 
 // Function to add all event listeners
 export const addEventListeners = () => {
@@ -41,6 +41,11 @@ export const addEventListeners = () => {
     // Select a project
     projectsList.addEventListener('click', (event) => {
         const projectsArray = Array.from(projectsList.children);
+        const projectClickedIndex = projectsArray.indexOf(event.target);
+        if (projectClickedIndex >= 0) {
+            projectSelected = projectClickedIndex;
+            Utility.refreshTasksDisplay();
+        }
         console.log(projectsArray.indexOf(event.target));
     });
 
@@ -69,6 +74,9 @@ export const addEventListeners = () => {
     });
 
     // Cancel new project
+    cancelNewProject.addEventListener('click', () => {
+        Utility.toggleModal(projectModal);
+    })
 
     // Add new task
     submitNewTask.addEventListener('click', () => {
