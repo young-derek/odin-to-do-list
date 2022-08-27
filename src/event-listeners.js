@@ -33,7 +33,7 @@ export const addEventListeners = () => {
         Utility.toggleModal(projectModal);
     });
 
-    // display project modal
+    // display task modal
     addNewTask.addEventListener('click', () => {
         Utility.toggleModal(taskModal);
     });

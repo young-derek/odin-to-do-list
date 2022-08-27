@@ -8,11 +8,12 @@ export const toggleModal = (modal) => {
     modal.reset();
 };
 
-// Function to refresh list of projects
+/**
+ * Function to refresh list of projects in the DOM
+ */
 export const refreshProjectsDisplay = () => {
     const projectsList = document.querySelector('#projects-list');
     // Clear current projects displayed
-
     projectsList.innerHTML = '';
 
     // Append each project as a list item
@@ -23,7 +24,9 @@ export const refreshProjectsDisplay = () => {
     });
 };
 
-// function to refresh list of tasks in the DOM
+/**
+ * Function to refresh list of tasks in the DOM
+ */
 export const refreshTasksDisplay = () => {
     const tasksList = document.querySelector('#tasks-list');
 
@@ -32,15 +35,12 @@ export const refreshTasksDisplay = () => {
 
     // Append each task item for the current project to the DOM
     toDoList[projectSelected].tasks.forEach((task) => {
-        
-        const listItem = document.createElement('li');
+        const taskItem = document.createElement('li');
         // checkbox, task title, due date, clickable priority to toggle, due date, expand button (to show textarea notes), edit button, remove button
         const checkbox = document.createElement('input');
 
-
-
-        listItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
-        tasksList.append(listItem);
+        taskItem.textContent = `Title: ${task.title}, Due Date: ${task.dueDate}, Priority: ${task.priority}, Notes: ${task.notes}`;
+        tasksList.append(taskItem);
     });
 };
 
