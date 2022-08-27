@@ -51,6 +51,8 @@ export const createPageLayout = () => {
     const taskModalPriorityContainer = document.createElement('div');
     const taskModalPriorityLabel = document.createElement('label');
     const taskModalPriority = document.createElement('select');
+    const taskModalNotesContainer = document.createElement('div');
+    const taskModalNotesLabel = document.createElement('label');
     const taskModalNotes = document.createElement('textarea');
 
     taskModalPriority.innerHTML = `
@@ -65,6 +67,7 @@ export const createPageLayout = () => {
     taskModalPriorityLabel.textContent = 'Task priority: ';
     taskModalDateLabel.textContent = 'Date: ';
     taskModalTextLabel.textContent = 'Task: ';
+    taskModalNotesLabel.textContent = 'Notes: ';
 
     taskModal.id = 'task-modal';
     taskModalDateInput.id = 'task-modal-date-input';
@@ -82,6 +85,7 @@ export const createPageLayout = () => {
     taskModalDateLabel.setAttribute('for', 'task-modal-date-input');
     taskModalPriorityLabel.setAttribute('for', 'task-modal-priority');
     taskModalPriority.setAttribute('name', 'task-modal-priority');
+    taskModalNotesLabel.setAttribute('for', 'task-modal-notes');
     btnTaskModalSubmit.type = 'button';
     btnTaskModalCancel.type = 'button';
 
@@ -139,12 +143,13 @@ export const createPageLayout = () => {
         taskModalPriorityLabel,
         taskModalPriority
     );
+    taskModalNotesContainer.append(taskModalNotesLabel, taskModalNotes)
     taskModal.append(
         taskModalTitle,
         taskModalTextInputContainer,
         taskModalDateInputContainer,
         taskModalPriorityContainer,
-        taskModalNotes,
+        taskModalNotesContainer,
         btnTaskModalSubmit,
         btnTaskModalCancel
     );

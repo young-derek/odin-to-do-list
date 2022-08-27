@@ -10,8 +10,5 @@ export const toDoList = [Project('Default Project', 2022 - 10 - 10, [], true)];
 ((run) => {
     createPageLayout();
     addEventListeners();
-
     refreshProjectsDisplay();
-
-
 })();
