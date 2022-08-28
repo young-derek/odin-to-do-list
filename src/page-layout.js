@@ -4,6 +4,7 @@ import { Task } from './task';
 import { toDoList } from '.';
 
 export let projectSelected = 0;
+export let taskChangeMode;
 
 export const createPageLayout = () => {
     // MAIN CONTAINER
@@ -56,6 +57,7 @@ export const createPageLayout = () => {
     btnAddTask.textContent = '+ Add New Task';
 
     btnAddTask.addEventListener('click', () => {
+        taskChangeMode = 'add';
         Utility.toggleModal(taskModal);
     });
 
@@ -134,6 +136,11 @@ export const createPageLayout = () => {
         // Toggle modal visibility
         Utility.toggleModal(taskModal);
     });
+
+    // Cancel adding new task
+    btnTaskModalCancel.addEventListener('click', () => {
+        Utility.toggleModal(taskModal);
+    })
 
     // PROJECT MODAL SECTION
     const projectModal = document.createElement('form');

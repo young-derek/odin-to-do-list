@@ -1,5 +1,5 @@
 // File that contains the to do list functionality
-import { projectSelected } from './page-layout';
+import { projectSelected, taskChangeMode } from './page-layout';
 import { toDoList } from '.';
 
 // Toggle modal visibility
@@ -8,9 +8,7 @@ export const toggleModal = (modal) => {
     modal.reset();
 };
 
-/**
- * Function to refresh list of projects in the DOM
- */
+// Function to refresh list of projects in the DOM
 export const refreshProjectsDisplay = () => {
     const projectsList = document.querySelector('#projects-list');
     // Clear current projects displayed
@@ -24,9 +22,7 @@ export const refreshProjectsDisplay = () => {
     });
 };
 
-/**
- * Function to refresh list of tasks in the DOM
- */
+// Function to refresh list of tasks in the DOM
 export const refreshTasksDisplay = () => {
     const tasksList = document.querySelector('#tasks-list');
 
@@ -53,13 +49,46 @@ export const refreshTasksDisplay = () => {
         editButton.classList.add('task-edit-button');
         removeButton.classList.add('task-remove-button');
 
+        // Add conditional classes
+        if (task.complete === true) {
+            taskItem.classList.add('task-complete');
+            checkbox.checked = true;
+        } else if (task.complete === false) {
+            taskItem.classList.remove('task-complete');
+        }
+
+        if (task.priority === 'Low') {
+            taskItem.classList.add('low-priority');
+        } else if (task.priority === 'Medium') {
+            taskItem.classList.add('medium-priority');
+        } else if (task.priority === 'High') {
+            taskItem.classList.add('high-priority');
+        }
+
         checkbox.setAttribute('type', 'checkbox');
         checkbox.addEventListener('click', () => {
-            
+            let taskSelected =
+                toDoList[projectSelected].tasks[
+                    Array.from(
+                        tasksList.querySelectorAll('.task-item')
+                    ).indexOf(checkbox.parentElement)
+                ];
+
+            if (taskSelected.complete === true) {
+                taskSelected.complete = false;
+                taskItem.classList.remove('task-complete');
+            } else if (taskSelected.complete === false) {
+                taskSelected.complete = true;
+                taskItem.classList.add('task-complete');
+            }
         });
 
+        editButton.addEventListener('click', () => {
+            
+        })
+
         taskTitle.textContent = task.title;
-        dueDate.textContent = task.dueDate;
+        dueDate.textContent = `Due: ${task.dueDate}`;
         priority.textContent = `${task.priority} Priority`;
         notesButton.textContent = 'View Notes';
         editButton.textContent = 'Edit';

@@ -113,3 +113,20 @@ footer {
 .display-none {
     display: none;
 }
+
+.task-complete {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.low-priority {
+    box-shadow: -10px 0px 0px lightgreen;
+}
+
+.medium-priority {
+    box-shadow: -10px 0px 0px yellow;
+}
+
+.high-priority {
+    box-shadow: -10px 0px 0px rgb(255, 129, 129);
+}
