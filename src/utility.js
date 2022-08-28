@@ -139,15 +139,6 @@ export const refreshTasksDisplay = () => {
                     ).indexOf(checkbox.parentElement)
                 ];
 
-            console.log(
-                Array.from(tasksList.querySelectorAll("input[type='checkbox']"))
-            );
-            console.log(
-                Array.from(
-                    tasksList.querySelectorAll("input[type='checkbox']")
-                ).indexOf(checkbox)
-            );
-
             if (taskSelected.complete === true) {
                 taskSelected.complete = false;
                 taskItem.classList.remove('task-complete');
@@ -215,7 +206,6 @@ export const refreshTasksDisplay = () => {
 
         notesButton.addEventListener('click', () => {
             taskNotesContainer.classList.toggle('display-none');
-            console.log(taskNotesContainer.classList);
         });
 
         tasksList.append(taskItem, taskNotesContainer);
