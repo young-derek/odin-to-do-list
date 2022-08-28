@@ -1,5 +1,5 @@
 // File that contains the to do list functionality
-import { projectSelected, taskChangeMode } from './page-layout';
+import { projectSelected, taskEditIndex } from './page-layout';
 import { toDoList } from '.';
 
 // Toggle modal visibility
@@ -84,8 +84,31 @@ export const refreshTasksDisplay = () => {
         });
 
         editButton.addEventListener('click', () => {
-            
-        })
+            const taskModal = document.querySelector('#task-modal');
+            const taskModalTextInput = document.querySelector(
+                '#task-modal-text-input'
+            );
+            const taskModalDateInput = document.querySelector(
+                '#task-modal-date-input'
+            );
+            const taskModalPriority = document.querySelector(
+                '#task-modal-priority'
+            );
+            const taskModalNotes = document.querySelector('#task-modal-notes');
+
+            let taskIndexSelected = Array.from(
+                tasksList.querySelectorAll('.task-item')
+            ).indexOf(editButton.parentElement);
+            let taskSelected =
+                toDoList[projectSelected].tasks[taskIndexSelected];
+            taskEditIndex[0] = taskIndexSelected;
+            toggleModal(taskModal);
+
+            taskModalTextInput.value = taskSelected.title;
+            taskModalDateInput.value = taskSelected.dueDate;
+            taskModalPriority.value = taskSelected.priority;
+            taskModalNotes.value = taskSelected.notes;
+        });
 
         taskTitle.textContent = task.title;
         dueDate.textContent = `Due: ${task.dueDate}`;

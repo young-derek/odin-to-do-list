@@ -4,7 +4,7 @@ import { Task } from './task';
 import { toDoList } from '.';
 
 export let projectSelected = 0;
-export let taskChangeMode;
+export let taskEditIndex = [];
 
 export const createPageLayout = () => {
     // MAIN CONTAINER
@@ -57,7 +57,8 @@ export const createPageLayout = () => {
     btnAddTask.textContent = '+ Add New Task';
 
     btnAddTask.addEventListener('click', () => {
-        taskChangeMode = 'add';
+        // Set the index of the task to be edited to the end of the project's task array
+        taskEditIndex[0] = toDoList[projectSelected].tasks.length;
         Utility.toggleModal(taskModal);
     });
 
@@ -117,7 +118,7 @@ export const createPageLayout = () => {
     btnTaskModalSubmit.type = 'button';
     btnTaskModalCancel.type = 'button';
 
-    // Add new task
+    // Submit task details
     btnTaskModalSubmit.addEventListener('click', () => {
         // Create new task object
         const newTask = Task(
@@ -127,8 +128,8 @@ export const createPageLayout = () => {
             taskModalNotes.value
         );
 
-        // Append task object to the selected project's task array
-        toDoList[projectSelected].tasks.push(newTask);
+        // Splice the new task into the array at the task index to be edited
+        toDoList[projectSelected].tasks.splice(taskEditIndex[0], 1, newTask);
 
         // Refresh task list in the DOM
         Utility.refreshTasksDisplay();
