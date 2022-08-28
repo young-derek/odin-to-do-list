@@ -1,4 +1,3 @@
-// File that contains the to do list functionality
 import { projectSelected, taskEditIndex } from './page-layout';
 import { toDoList } from '.';
 
