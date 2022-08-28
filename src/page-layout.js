@@ -88,6 +88,7 @@ export const createPageLayout = () => {
     const taskModalDateInputContainer = document.createElement('div');
     const taskModalDateInput = document.createElement('input');
     const taskModalDateLabel = document.createElement('label');
+    const taskModalBtnContainer = document.createElement('div');
     const btnTaskModalSubmit = document.createElement('button');
     const btnTaskModalCancel = document.createElement('button');
     const taskModalPriorityContainer = document.createElement('div');
@@ -103,11 +104,11 @@ export const createPageLayout = () => {
     <option value="High">High</option>
     `;
 
-    taskModalTitle.textContent = 'New Task:';
+    taskModalTitle.textContent = 'Task Details:';
     btnTaskModalSubmit.textContent = 'Submit';
     btnTaskModalCancel.textContent = 'Cancel';
     taskModalPriorityLabel.textContent = 'Task priority: ';
-    taskModalDateLabel.textContent = 'Date: ';
+    taskModalDateLabel.textContent = 'Due Date: ';
     taskModalTextLabel.textContent = 'Task: ';
     taskModalNotesLabel.textContent = 'Notes: ';
 
@@ -165,6 +166,7 @@ export const createPageLayout = () => {
     const projectModalDateContainer = document.createElement('div');
     const projectModalDateInput = document.createElement('input');
     const projectModalDateLabel = document.createElement('label');
+    const projectModalBtnContainer = document.createElement('div');
     const btnProjectModalSubmit = document.createElement('button');
     const btnProjectModalCancel = document.createElement('button');
 
@@ -230,14 +232,14 @@ export const createPageLayout = () => {
         taskModalPriority
     );
     taskModalNotesContainer.append(taskModalNotesLabel, taskModalNotes);
+    taskModalBtnContainer.append(btnTaskModalSubmit, btnTaskModalCancel);
     taskModal.append(
         taskModalTitle,
         taskModalTextInputContainer,
         taskModalDateInputContainer,
         taskModalPriorityContainer,
         taskModalNotesContainer,
-        btnTaskModalSubmit,
-        btnTaskModalCancel
+        taskModalBtnContainer
     );
     projectModalTextInputContainer.append(
         projectModalTextLabel,
@@ -247,12 +249,15 @@ export const createPageLayout = () => {
         projectModalDateLabel,
         projectModalDateInput
     );
+    projectModalBtnContainer.append(
+        btnProjectModalSubmit,
+        btnProjectModalCancel
+    );
     projectModal.append(
         projectModalTitle,
         projectModalTextInputContainer,
         projectModalDateContainer,
-        btnProjectModalSubmit,
-        btnProjectModalCancel
+        projectModalBtnContainer
     );
     footer.append(copyrightInfo);
 };

@@ -4,7 +4,7 @@ import { Task } from './task';
 import { Project } from './project';
 import { refreshProjectsDisplay, refreshTasksDisplay } from './utility';
 
-export const toDoList = [Project('Default Project', '2022-10-10', [], true)];
+export const toDoList = [Project('Default Project', '2025-01-01', [], true)];
 
 ((run) => {
     createPageLayout();
