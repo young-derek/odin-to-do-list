@@ -65,7 +65,14 @@ export const refreshProjectsDisplay = () => {
             });
         });
 
-        removeButton.addEventListener('click', () => {});
+        removeButton.addEventListener('click', () => {
+            let projectIndex = Array.from(
+                projectsList.querySelectorAll('.project-item')
+            ).indexOf(removeButton.parentElement);
+
+            toDoList.splice(projectIndex, 1);
+            refreshProjectsDisplay();
+        });
 
         projectItem.append(
             projectTitle,
