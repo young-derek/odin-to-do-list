@@ -15,7 +15,7 @@ export const createPageLayout = () => {
     // HEADER SECTION
     const header = document.createElement('header');
     const pageTitle = document.createElement('h1');
-    pageTitle.textContent = 'To Do List!';
+    pageTitle.textContent = 'To-Do List';
 
     // PROJECTS SECTION
     const projectsSection = document.createElement('section');
@@ -42,6 +42,13 @@ export const createPageLayout = () => {
         );
         if (projectClickedIndex >= 0) {
             projectSelected = projectClickedIndex;
+            projectsArray.forEach((project) => {
+                if (projectsArray.indexOf(project) === projectSelected) {
+                    project.classList.add('project-selected');
+                } else {
+                    project.classList.remove('project-selected');
+                }
+            });
             Utility.refreshTasksDisplay();
         }
     });
@@ -60,8 +67,12 @@ export const createPageLayout = () => {
 
     btnAddTask.addEventListener('click', () => {
         // Set the index of the task to be edited to the end of the project's task array
-        taskEditIndex[0] = toDoList[projectSelected].tasks.length;
-        Utility.toggleModal(taskModal);
+        if (toDoList[projectSelected] === undefined) {
+            alert('Please add a project before adding tasks.');
+        } else {
+            taskEditIndex[0] = toDoList[projectSelected].tasks.length;
+            Utility.toggleModal(taskModal);
+        }
     });
 
     // FOOTER SECTION
