@@ -37,7 +37,9 @@ export const createPageLayout = () => {
     // Select a project in the DOM
     projectsList.addEventListener('click', (event) => {
         const projectsArray = Array.from(projectsList.children);
-        const projectClickedIndex = projectsArray.indexOf(event.target);
+        const projectClickedIndex = projectsArray.indexOf(
+            event.target.parentElement
+        );
         if (projectClickedIndex >= 0) {
             projectSelected = projectClickedIndex;
             Utility.refreshTasksDisplay();
