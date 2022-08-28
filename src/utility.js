@@ -1,5 +1,9 @@
 // File that contains the to do list functionality
-import { projectSelected, taskEditIndex } from './page-layout';
+import {
+    projectSelected,
+    taskEditIndex,
+    projectEditIndex,
+} from './page-layout';
 import { toDoList } from '.';
 
 // Toggle modal visibility
@@ -16,14 +20,60 @@ export const refreshProjectsDisplay = () => {
 
     // Append each project as a list item
     toDoList.forEach((project) => {
-        const listItem = document.createElement('li');
+        const projectItem = document.createElement('li');
+        const projectTitle = document.createElement('p');
+        const projectDueDate = document.createElement('p');
         const editButton = document.createElement('button');
         const removeButton = document.createElement('button');
-        
 
+        projectTitle.textContent = project.title;
+        projectDueDate.textContent = `Due: ${project.dueDate}`;
+        editButton.textContent = 'Edit';
+        removeButton.textContent = 'Remove';
 
-        listItem.textContent = project.title;
-        projectsList.append(listItem);
+        projectItem.classList.add('project-item');
+        projectTitle.classList.add('project-title');
+        removeButton.classList.add('project-remove-button');
+        editButton.classList.add('project-edit-button');
+
+        editButton.setAttribute('type', 'button');
+        removeButton.setAttribute('type', 'button');
+
+        editButton.addEventListener('click', () => {
+            const newProjectTitleInput = document.createElement('input');
+            const newProjectDueDateInput = document.createElement('input');
+            const newProjectSubmitButton = document.createElement('button');
+
+            newProjectDueDateInput.setAttribute('type', 'date');
+            newProjectSubmitButton.setAttribute('type', 'button');
+
+            newProjectSubmitButton.textContent = 'Submit';
+
+            let projectIndex = Array.from(
+                projectsList.querySelectorAll('.project-item')
+            ).indexOf(editButton.parentElement);
+
+            projectTitle.replaceWith(newProjectTitleInput);
+            projectDueDate.replaceWith(newProjectDueDateInput);
+            editButton.replaceWith(newProjectSubmitButton);
+
+            newProjectSubmitButton.addEventListener('click', () => {
+                toDoList[projectIndex].title = newProjectTitleInput.value;
+                toDoList[projectIndex].dueDate = newProjectDueDateInput.value;
+
+                refreshProjectsDisplay();
+            });
+        });
+
+        removeButton.addEventListener('click', () => {});
+
+        projectItem.append(
+            projectTitle,
+            projectDueDate,
+            editButton,
+            removeButton
+        );
+        projectsList.append(projectItem);
     });
 };
 
@@ -38,9 +88,9 @@ export const refreshTasksDisplay = () => {
     toDoList[projectSelected].tasks.forEach((task) => {
         const taskItem = document.createElement('li');
         const checkbox = document.createElement('input');
-        const taskTitle = document.createElement('div');
-        const dueDate = document.createElement('div');
-        const priority = document.createElement('div');
+        const taskTitle = document.createElement('p');
+        const dueDate = document.createElement('p');
+        const priority = document.createElement('p');
         const notesButton = document.createElement('button');
         const editButton = document.createElement('button');
         const removeButton = document.createElement('button');
@@ -87,6 +137,15 @@ export const refreshTasksDisplay = () => {
                     ).indexOf(checkbox.parentElement)
                 ];
 
+            console.log(
+                Array.from(tasksList.querySelectorAll("input[type='checkbox']"))
+            );
+            console.log(
+                Array.from(
+                    tasksList.querySelectorAll("input[type='checkbox']")
+                ).indexOf(checkbox)
+            );
+
             if (taskSelected.complete === true) {
                 taskSelected.complete = false;
                 taskItem.classList.remove('task-complete');
@@ -112,8 +171,10 @@ export const refreshTasksDisplay = () => {
             let taskIndexSelected = Array.from(
                 tasksList.querySelectorAll('.task-item')
             ).indexOf(editButton.parentElement);
+
             let taskSelected =
                 toDoList[projectSelected].tasks[taskIndexSelected];
+
             taskEditIndex[0] = taskIndexSelected;
             toggleModal(taskModal);
 

@@ -187,7 +187,7 @@ export const createPageLayout = () => {
         toDoList.push(newProject);
 
         // Refresh the project list
-        Utility.refreshProjectsDisplay(toDoList, projectsList);
+        Utility.refreshProjectsDisplay();
 
         // Toggle off the project modal
         Utility.toggleModal(projectModal);
