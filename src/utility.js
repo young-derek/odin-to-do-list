@@ -1,9 +1,5 @@
 // File that contains the to do list functionality
-import {
-    projectSelected,
-    taskEditIndex,
-    projectEditIndex,
-} from './page-layout';
+import { projectSelected, taskEditIndex } from './page-layout';
 import { toDoList } from '.';
 
 // Toggle modal visibility
@@ -223,12 +219,11 @@ export const refreshTasksDisplay = () => {
             console.log(taskNotesContainer.classList);
         });
 
-        // Append both DOM elements
         tasksList.append(taskItem, taskNotesContainer);
     });
 };
 
-// Function to append an item to an array
+// Function to push an item to an array
 export const pushToArray = (array, item) => {
     array.push(item);
 };

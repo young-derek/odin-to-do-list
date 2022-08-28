@@ -5,7 +5,6 @@ import { toDoList } from '.';
 
 export let projectSelected = 0;
 export let taskEditIndex = [];
-export let projectEditIndex = [];
 
 export const createPageLayout = () => {
     // MAIN CONTAINER
@@ -30,7 +29,7 @@ export const createPageLayout = () => {
     btnAddProject.id = 'btn-add-project';
     btnAddProject.textContent = '+ Add New Project';
 
-    // Show add new project modal
+    // Display Add new project modal
     btnAddProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
     });
@@ -142,7 +141,7 @@ export const createPageLayout = () => {
     // Cancel adding new task
     btnTaskModalCancel.addEventListener('click', () => {
         Utility.toggleModal(taskModal);
-    })
+    });
 
     // PROJECT MODAL SECTION
     const projectModal = document.createElement('form');
@@ -244,24 +243,3 @@ export const createPageLayout = () => {
     );
     footer.append(copyrightInfo);
 };
-
-// cancel new task
-
-// delete project
-
-// delete task
-
-// edit task (bring up modal with task info filled in)
-
-// mark task complete
-
-// change task priority (low, medium, high)
-
-// display tasks by project
-
-// display all tasks
-
-//add'tl:
-// edit project name
-// sort tasks by due date
-// manually change order of tasks (drop down list w/ number of tasks in project);
