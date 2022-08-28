@@ -5,6 +5,7 @@ import { toDoList } from '.';
 
 export let projectSelected = 0;
 export let taskEditIndex = [];
+export let projectEditIndex = [];
 
 export const createPageLayout = () => {
     // MAIN CONTAINER

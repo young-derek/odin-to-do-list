@@ -17,6 +17,11 @@ export const refreshProjectsDisplay = () => {
     // Append each project as a list item
     toDoList.forEach((project) => {
         const listItem = document.createElement('li');
+        const editButton = document.createElement('button');
+        const removeButton = document.createElement('button');
+        
+
+
         listItem.textContent = project.title;
         projectsList.append(listItem);
     });
@@ -49,6 +54,15 @@ export const refreshTasksDisplay = () => {
         editButton.classList.add('task-edit-button');
         removeButton.classList.add('task-remove-button');
 
+        taskTitle.textContent = task.title;
+        dueDate.textContent = `Due: ${task.dueDate}`;
+        priority.textContent = `${task.priority} Priority`;
+        notesButton.textContent = 'View Notes';
+        editButton.textContent = 'Edit';
+        removeButton.textContent = 'Remove';
+
+        checkbox.setAttribute('type', 'checkbox');
+
         // Add conditional classes
         if (task.complete === true) {
             taskItem.classList.add('task-complete');
@@ -65,7 +79,6 @@ export const refreshTasksDisplay = () => {
             taskItem.classList.add('high-priority');
         }
 
-        checkbox.setAttribute('type', 'checkbox');
         checkbox.addEventListener('click', () => {
             let taskSelected =
                 toDoList[projectSelected].tasks[
@@ -110,12 +123,14 @@ export const refreshTasksDisplay = () => {
             taskModalNotes.value = taskSelected.notes;
         });
 
-        taskTitle.textContent = task.title;
-        dueDate.textContent = `Due: ${task.dueDate}`;
-        priority.textContent = `${task.priority} Priority`;
-        notesButton.textContent = 'View Notes';
-        editButton.textContent = 'Edit';
-        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', () => {
+            let taskIndexSelected = Array.from(
+                tasksList.querySelectorAll('.task-item')
+            ).indexOf(removeButton.parentElement);
+
+            toDoList[projectSelected].tasks.splice(taskIndexSelected, 1);
+            refreshTasksDisplay();
+        });
 
         taskItem.append(
             checkbox,
