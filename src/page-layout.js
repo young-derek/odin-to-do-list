@@ -29,7 +29,6 @@ export const createPageLayout = () => {
     btnAddProject.id = 'btn-add-project';
     btnAddProject.textContent = '+ Add New Project';
 
-
     // Display Add new project modal
     btnAddProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
@@ -265,6 +264,4 @@ export const createPageLayout = () => {
         projectModalBtnContainer
     );
     footer.append(copyrightInfo);
-
-
 };

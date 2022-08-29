@@ -1,6 +1,5 @@
 import './style.css';
 import { createPageLayout } from './page-layout.js';
-import { Task } from './task';
 import { Project } from './project';
 import { refreshProjectsDisplay, refreshTasksDisplay } from './utility';
 

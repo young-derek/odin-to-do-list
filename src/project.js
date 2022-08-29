@@ -1,6 +1,6 @@
 /**
- * 
- * @param {string} title 
+ *
+ * @param {string} title
  * @param {date} dueDate
  * @returns New Project object
  */
@@ -10,6 +10,6 @@ export const Project = (title, dueDate) => {
         title: title,
         dueDate: dueDate,
         tasks: [],
-        selected: false
-    }
+        selected: false,
+    };
 };

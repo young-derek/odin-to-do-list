@@ -13,8 +13,6 @@ export const refreshProjectsDisplay = () => {
     // Clear current projects displayed
     projectsList.innerHTML = '';
 
-
-
     // Append each project as a list item
     toDoList.forEach((project) => {
         const projectItem = document.createElement('li');
@@ -81,10 +79,11 @@ export const refreshProjectsDisplay = () => {
         projectsList.append(projectItem);
     });
 
-    if(projectSelected === 0) {
-        document.querySelector('#projects-list').firstChild.classList.add('project-selected');
+    if (projectSelected === 0) {
+        document
+            .querySelector('#projects-list')
+            .firstChild.classList.add('project-selected');
     }
-
 };
 
 // Function to refresh list of tasks in the DOM
