@@ -3,7 +3,7 @@ import { Project } from './project';
 import { Task } from './task';
 import { toDoList } from '.';
 
-export let projectSelected = 0;
+export let projectSelected = [];
 export let taskEditIndex = [];
 
 export const createPageLayout = () => {
@@ -29,6 +29,8 @@ export const createPageLayout = () => {
     btnAddProject.id = 'btn-add-project';
     btnAddProject.textContent = '+ Add New Project';
 
+    projectSelected[0] = 0;
+
     // Display Add new project modal
     btnAddProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
@@ -41,14 +43,8 @@ export const createPageLayout = () => {
             event.target.parentElement
         );
         if (projectClickedIndex >= 0) {
-            projectSelected = projectClickedIndex;
-            projectsArray.forEach((project) => {
-                if (projectsArray.indexOf(project) === projectSelected) {
-                    project.classList.add('project-selected');
-                } else {
-                    project.classList.remove('project-selected');
-                }
-            });
+            projectSelected[0] = projectClickedIndex;
+            Utility.refreshProjectsDisplay();
             Utility.refreshTasksDisplay();
         }
     });
@@ -68,10 +64,10 @@ export const createPageLayout = () => {
 
     btnAddTask.addEventListener('click', () => {
         // Set the index of the task to be edited to the end of the project's task array
-        if (toDoList[projectSelected] === undefined) {
+        if (toDoList[projectSelected[0]] === undefined) {
             alert('Please add a project before adding tasks.');
         } else {
-            taskEditIndex[0] = toDoList[projectSelected].tasks.length;
+            taskEditIndex[0] = toDoList[projectSelected[0]].tasks.length;
             Utility.toggleModal(taskModal);
         }
     });
@@ -144,7 +140,7 @@ export const createPageLayout = () => {
         );
 
         // Splice the new task into the array at the task index to be edited
-        toDoList[projectSelected].tasks.splice(taskEditIndex[0], 1, newTask);
+        toDoList[projectSelected[0]].tasks.splice(taskEditIndex[0], 1, newTask);
 
         // Refresh task list in the DOM
         Utility.refreshTasksDisplay();

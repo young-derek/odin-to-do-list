@@ -5,6 +5,7 @@ import { toDoList } from '.';
 export const toggleModal = (modal) => {
     modal.classList.toggle('inactive');
     modal.reset();
+    console.log(projectSelected[0]);
 };
 
 // Function to refresh list of projects in the DOM
@@ -13,76 +14,90 @@ export const refreshProjectsDisplay = () => {
     // Clear current projects displayed
     projectsList.innerHTML = '';
 
-    // Append each project as a list item
-    toDoList.forEach((project) => {
-        const projectItem = document.createElement('li');
-        const projectTitle = document.createElement('p');
-        const projectDueDate = document.createElement('p');
-        const editButton = document.createElement('button');
-        const removeButton = document.createElement('button');
+    if (toDoList.length > 0) {
+        // Append each project as a list item
+        toDoList.forEach((project) => {
+            const projectItem = document.createElement('li');
+            const projectTitle = document.createElement('p');
+            const projectDueDate = document.createElement('p');
+            const editButton = document.createElement('button');
+            const removeButton = document.createElement('button');
 
-        projectTitle.textContent = project.title;
-        projectDueDate.textContent = `Due: ${project.dueDate}`;
-        editButton.textContent = 'Edit';
-        removeButton.textContent = 'Remove';
+            projectTitle.textContent = project.title;
+            projectDueDate.textContent = `Due: ${project.dueDate}`;
+            editButton.textContent = 'Edit';
+            removeButton.textContent = 'Remove';
 
-        projectItem.classList.add('project-item');
-        projectTitle.classList.add('project-title');
-        removeButton.classList.add('project-remove-button');
-        editButton.classList.add('project-edit-button');
 
-        editButton.setAttribute('type', 'button');
-        removeButton.setAttribute('type', 'button');
+            projectItem.classList.add('project-item');
+            projectTitle.classList.add('project-title');
+            removeButton.classList.add('project-remove-button');
+            editButton.classList.add('project-edit-button');
 
-        editButton.addEventListener('click', () => {
-            const newProjectTitleInput = document.createElement('input');
-            const newProjectDueDateInput = document.createElement('input');
-            const newProjectSubmitButton = document.createElement('button');
+            editButton.setAttribute('type', 'button');
+            removeButton.setAttribute('type', 'button');
 
-            newProjectDueDateInput.setAttribute('type', 'date');
-            newProjectSubmitButton.setAttribute('type', 'button');
+            editButton.addEventListener('click', () => {
+                const newProjectTitleInput = document.createElement('input');
+                const newProjectDueDateInput = document.createElement('input');
+                const newProjectSubmitButton = document.createElement('button');
 
-            newProjectSubmitButton.textContent = 'Submit';
+                newProjectDueDateInput.setAttribute('type', 'date');
+                newProjectSubmitButton.setAttribute('type', 'button');
 
-            let projectIndex = Array.from(
-                projectsList.querySelectorAll('.project-item')
-            ).indexOf(editButton.parentElement);
+                newProjectSubmitButton.textContent = 'Submit';
 
-            projectTitle.replaceWith(newProjectTitleInput);
-            projectDueDate.replaceWith(newProjectDueDateInput);
-            editButton.replaceWith(newProjectSubmitButton);
+                let projectIndex = Array.from(
+                    projectsList.querySelectorAll('.project-item')
+                ).indexOf(editButton.parentElement);
 
-            newProjectSubmitButton.addEventListener('click', () => {
-                toDoList[projectIndex].title = newProjectTitleInput.value;
-                toDoList[projectIndex].dueDate = newProjectDueDateInput.value;
+                projectTitle.replaceWith(newProjectTitleInput);
+                projectDueDate.replaceWith(newProjectDueDateInput);
+                editButton.replaceWith(newProjectSubmitButton);
 
-                refreshProjectsDisplay();
+                newProjectSubmitButton.addEventListener('click', () => {
+                    toDoList[projectIndex].title = newProjectTitleInput.value;
+                    toDoList[projectIndex].dueDate =
+                        newProjectDueDateInput.value;
+
+                    refreshProjectsDisplay();
+                });
             });
+
+            removeButton.addEventListener('click', () => {
+                let projectIndex = Array.from(
+                    projectsList.querySelectorAll('.project-item')
+                ).indexOf(removeButton.parentElement);
+
+                // Change selected project when projects are removed
+                if (projectSelected[0] === 0) {
+                    projectSelected[0]++;
+                } 
+                else if (projectSelected[0] === toDoList.length - 1) { 
+                    projectSelected[0]--;
+                }
+
+                toDoList.splice(projectIndex, 1);
+                refreshProjectsDisplay();
+                refreshTasksDisplay();
+            });
+
+            projectItem.append(
+                projectTitle,
+                projectDueDate,
+                editButton,
+                removeButton
+            );
+            projectsList.append(projectItem);
         });
 
-        removeButton.addEventListener('click', () => {
-            let projectIndex = Array.from(
-                projectsList.querySelectorAll('.project-item')
-            ).indexOf(removeButton.parentElement);
+        if (projectSelected[0] === 0) {
+            document
+                .querySelector('#projects-list')
+                .firstChild.classList.add('project-selected');
+        }
 
-            toDoList.splice(projectIndex, 1);
-            refreshProjectsDisplay();
-            refreshTasksDisplay();
-        });
-
-        projectItem.append(
-            projectTitle,
-            projectDueDate,
-            editButton,
-            removeButton
-        );
-        projectsList.append(projectItem);
-    });
-
-    if (projectSelected === 0) {
-        document
-            .querySelector('#projects-list')
-            .firstChild.classList.add('project-selected');
+        Array.from(document.querySelectorAll('.project-item'))[projectSelected[0]].classList.add('project-selected');
     }
 };
 
@@ -97,9 +112,11 @@ export const refreshTasksDisplay = () => {
     tasksList.innerHTML = '';
 
     if (toDoList.length > 0) {
-        tasksTitle.textContent = `Tasks for ${toDoList[projectSelected].title}:`;
+        tasksTitle.textContent = `Tasks for ${
+            toDoList[projectSelected[0]].title
+        }:`;
         // Append each task item for the current project to the DOM
-        toDoList[projectSelected].tasks.forEach((task) => {
+        toDoList[projectSelected[0]].tasks.forEach((task) => {
             const taskItem = document.createElement('li');
             const checkbox = document.createElement('input');
             const taskTitle = document.createElement('p');
@@ -145,7 +162,7 @@ export const refreshTasksDisplay = () => {
 
             checkbox.addEventListener('click', () => {
                 let taskSelected =
-                    toDoList[projectSelected].tasks[
+                    toDoList[projectSelected[0]].tasks[
                         Array.from(
                             tasksList.querySelectorAll('.task-item')
                         ).indexOf(checkbox.parentElement)
@@ -179,7 +196,7 @@ export const refreshTasksDisplay = () => {
                 ).indexOf(editButton.parentElement);
 
                 let taskSelected =
-                    toDoList[projectSelected].tasks[taskIndexSelected];
+                    toDoList[projectSelected[0]].tasks[taskIndexSelected];
 
                 taskEditIndex[0] = taskIndexSelected;
                 toggleModal(taskModal);
@@ -195,7 +212,7 @@ export const refreshTasksDisplay = () => {
                     tasksList.querySelectorAll('.task-item')
                 ).indexOf(removeButton.parentElement);
 
-                toDoList[projectSelected].tasks.splice(taskIndexSelected, 1);
+                toDoList[projectSelected[0]].tasks.splice(taskIndexSelected, 1);
                 refreshTasksDisplay();
             });
 
