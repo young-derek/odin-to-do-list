@@ -5,7 +5,6 @@ import { toDoList } from '.';
 export const toggleModal = (modal) => {
     modal.classList.toggle('inactive');
     modal.reset();
-    console.log(projectSelected[0]);
 };
 
 // Function to refresh list of projects in the DOM
@@ -27,7 +26,6 @@ export const refreshProjectsDisplay = () => {
             projectDueDate.textContent = `Due: ${project.dueDate}`;
             editButton.textContent = 'Edit';
             removeButton.textContent = 'Remove';
-
 
             projectItem.classList.add('project-item');
             projectTitle.classList.add('project-title');
@@ -72,8 +70,7 @@ export const refreshProjectsDisplay = () => {
                 // Change selected project when projects are removed
                 if (projectSelected[0] === 0) {
                     projectSelected[0]++;
-                } 
-                else if (projectSelected[0] === toDoList.length - 1) { 
+                } else if (projectSelected[0] === toDoList.length - 1) {
                     projectSelected[0]--;
                 }
 
@@ -97,7 +94,9 @@ export const refreshProjectsDisplay = () => {
                 .firstChild.classList.add('project-selected');
         }
 
-        Array.from(document.querySelectorAll('.project-item'))[projectSelected[0]].classList.add('project-selected');
+        Array.from(document.querySelectorAll('.project-item'))[
+            projectSelected[0]
+        ].classList.add('project-selected');
     }
 };
 
