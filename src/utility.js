@@ -13,6 +13,8 @@ export const refreshProjectsDisplay = () => {
     // Clear current projects displayed
     projectsList.innerHTML = '';
 
+
+
     // Append each project as a list item
     toDoList.forEach((project) => {
         const projectItem = document.createElement('li');
@@ -67,6 +69,7 @@ export const refreshProjectsDisplay = () => {
 
             toDoList.splice(projectIndex, 1);
             refreshProjectsDisplay();
+            refreshTasksDisplay();
         });
 
         projectItem.append(
@@ -77,139 +80,151 @@ export const refreshProjectsDisplay = () => {
         );
         projectsList.append(projectItem);
     });
+
+    if(projectSelected === 0) {
+        document.querySelector('#projects-list').firstChild.classList.add('project-selected');
+    }
+
 };
 
 // Function to refresh list of tasks in the DOM
 export const refreshTasksDisplay = () => {
     const tasksList = document.querySelector('#tasks-list');
+    const tasksTitle = document.querySelector('#tasks-title');
+
+    tasksTitle.textContent = 'Tasks:';
 
     // Clear the task list
     tasksList.innerHTML = '';
 
-    // Append each task item for the current project to the DOM
-    toDoList[projectSelected].tasks.forEach((task) => {
-        const taskItem = document.createElement('li');
-        const checkbox = document.createElement('input');
-        const taskTitle = document.createElement('p');
-        const dueDate = document.createElement('p');
-        const priority = document.createElement('p');
-        const notesButton = document.createElement('button');
-        const editButton = document.createElement('button');
-        const removeButton = document.createElement('button');
+    if (toDoList.length > 0) {
+        tasksTitle.textContent = `Tasks for ${toDoList[projectSelected].title}:`;
+        // Append each task item for the current project to the DOM
+        toDoList[projectSelected].tasks.forEach((task) => {
+            const taskItem = document.createElement('li');
+            const checkbox = document.createElement('input');
+            const taskTitle = document.createElement('p');
+            const dueDate = document.createElement('p');
+            const priority = document.createElement('p');
+            const notesButton = document.createElement('button');
+            const editButton = document.createElement('button');
+            const removeButton = document.createElement('button');
 
-        taskItem.classList.add('task-item');
-        checkbox.classList.add('task-checkbox');
-        taskTitle.classList.add('task-title');
-        dueDate.classList.add('task-due-date');
-        priority.classList.add('task-priority');
-        notesButton.classList.add('task-notes-button');
-        editButton.classList.add('task-edit-button');
-        removeButton.classList.add('task-remove-button');
+            taskItem.classList.add('task-item');
+            checkbox.classList.add('task-checkbox');
+            taskTitle.classList.add('task-title');
+            dueDate.classList.add('task-due-date');
+            priority.classList.add('task-priority');
+            notesButton.classList.add('task-notes-button');
+            editButton.classList.add('task-edit-button');
+            removeButton.classList.add('task-remove-button');
 
-        taskTitle.textContent = task.title;
-        dueDate.textContent = `Due: ${task.dueDate}`;
-        priority.textContent = `${task.priority} Priority`;
-        notesButton.textContent = 'View Notes';
-        editButton.textContent = 'Edit';
-        removeButton.textContent = 'Remove';
+            taskTitle.textContent = task.title;
+            dueDate.textContent = `Due: ${task.dueDate}`;
+            priority.textContent = `${task.priority} Priority`;
+            notesButton.textContent = 'View Notes';
+            editButton.textContent = 'Edit';
+            removeButton.textContent = 'Remove';
 
-        checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('type', 'checkbox');
 
-        // Add conditional classes
-        if (task.complete === true) {
-            taskItem.classList.add('task-complete');
-            checkbox.checked = true;
-        } else if (task.complete === false) {
-            taskItem.classList.remove('task-complete');
-        }
-
-        if (task.priority === 'Low') {
-            taskItem.classList.add('low-priority');
-        } else if (task.priority === 'Medium') {
-            taskItem.classList.add('medium-priority');
-        } else if (task.priority === 'High') {
-            taskItem.classList.add('high-priority');
-        }
-
-        checkbox.addEventListener('click', () => {
-            let taskSelected =
-                toDoList[projectSelected].tasks[
-                    Array.from(
-                        tasksList.querySelectorAll('.task-item')
-                    ).indexOf(checkbox.parentElement)
-                ];
-
-            if (taskSelected.complete === true) {
-                taskSelected.complete = false;
-                taskItem.classList.remove('task-complete');
-            } else if (taskSelected.complete === false) {
-                taskSelected.complete = true;
+            // Add conditional classes
+            if (task.complete === true) {
                 taskItem.classList.add('task-complete');
+                checkbox.checked = true;
+            } else if (task.complete === false) {
+                taskItem.classList.remove('task-complete');
             }
-        });
 
-        editButton.addEventListener('click', () => {
-            const taskModal = document.querySelector('#task-modal');
-            const taskModalTextInput = document.querySelector(
-                '#task-modal-text-input'
+            if (task.priority === 'Low') {
+                taskItem.classList.add('low-priority');
+            } else if (task.priority === 'Medium') {
+                taskItem.classList.add('medium-priority');
+            } else if (task.priority === 'High') {
+                taskItem.classList.add('high-priority');
+            }
+
+            checkbox.addEventListener('click', () => {
+                let taskSelected =
+                    toDoList[projectSelected].tasks[
+                        Array.from(
+                            tasksList.querySelectorAll('.task-item')
+                        ).indexOf(checkbox.parentElement)
+                    ];
+
+                if (taskSelected.complete === true) {
+                    taskSelected.complete = false;
+                    taskItem.classList.remove('task-complete');
+                } else if (taskSelected.complete === false) {
+                    taskSelected.complete = true;
+                    taskItem.classList.add('task-complete');
+                }
+            });
+
+            editButton.addEventListener('click', () => {
+                const taskModal = document.querySelector('#task-modal');
+                const taskModalTextInput = document.querySelector(
+                    '#task-modal-text-input'
+                );
+                const taskModalDateInput = document.querySelector(
+                    '#task-modal-date-input'
+                );
+                const taskModalPriority = document.querySelector(
+                    '#task-modal-priority'
+                );
+                const taskModalNotes =
+                    document.querySelector('#task-modal-notes');
+
+                let taskIndexSelected = Array.from(
+                    tasksList.querySelectorAll('.task-item')
+                ).indexOf(editButton.parentElement);
+
+                let taskSelected =
+                    toDoList[projectSelected].tasks[taskIndexSelected];
+
+                taskEditIndex[0] = taskIndexSelected;
+                toggleModal(taskModal);
+
+                taskModalTextInput.value = taskSelected.title;
+                taskModalDateInput.value = taskSelected.dueDate;
+                taskModalPriority.value = taskSelected.priority;
+                taskModalNotes.value = taskSelected.notes;
+            });
+
+            removeButton.addEventListener('click', () => {
+                let taskIndexSelected = Array.from(
+                    tasksList.querySelectorAll('.task-item')
+                ).indexOf(removeButton.parentElement);
+
+                toDoList[projectSelected].tasks.splice(taskIndexSelected, 1);
+                refreshTasksDisplay();
+            });
+
+            taskItem.append(
+                checkbox,
+                taskTitle,
+                dueDate,
+                priority,
+                notesButton,
+                editButton,
+                removeButton
             );
-            const taskModalDateInput = document.querySelector(
-                '#task-modal-date-input'
+
+            // Create additional notes div
+            const taskNotesContainer = document.createElement('div');
+            taskNotesContainer.textContent = `Notes: ${task.notes}`;
+            taskNotesContainer.classList.add(
+                'task-notes-container',
+                'display-none'
             );
-            const taskModalPriority = document.querySelector(
-                '#task-modal-priority'
-            );
-            const taskModalNotes = document.querySelector('#task-modal-notes');
 
-            let taskIndexSelected = Array.from(
-                tasksList.querySelectorAll('.task-item')
-            ).indexOf(editButton.parentElement);
+            notesButton.addEventListener('click', () => {
+                taskNotesContainer.classList.toggle('display-none');
+            });
 
-            let taskSelected =
-                toDoList[projectSelected].tasks[taskIndexSelected];
-
-            taskEditIndex[0] = taskIndexSelected;
-            toggleModal(taskModal);
-
-            taskModalTextInput.value = taskSelected.title;
-            taskModalDateInput.value = taskSelected.dueDate;
-            taskModalPriority.value = taskSelected.priority;
-            taskModalNotes.value = taskSelected.notes;
+            tasksList.append(taskItem, taskNotesContainer);
         });
-
-        removeButton.addEventListener('click', () => {
-            let taskIndexSelected = Array.from(
-                tasksList.querySelectorAll('.task-item')
-            ).indexOf(removeButton.parentElement);
-
-            toDoList[projectSelected].tasks.splice(taskIndexSelected, 1);
-            refreshTasksDisplay();
-        });
-
-        taskItem.append(
-            checkbox,
-            taskTitle,
-            dueDate,
-            priority,
-            notesButton,
-            editButton,
-            removeButton
-        );
-
-        // Create additional notes div
-        const taskNotesContainer = document.createElement('div');
-        taskNotesContainer.textContent = `Notes: ${task.notes}`;
-        taskNotesContainer.classList.add(
-            'task-notes-container',
-            'display-none'
-        );
-
-        notesButton.addEventListener('click', () => {
-            taskNotesContainer.classList.toggle('display-none');
-        });
-
-        tasksList.append(taskItem, taskNotesContainer);
-    });
+    }
 };
 
 // Function to push an item to an array

@@ -29,6 +29,7 @@ export const createPageLayout = () => {
     btnAddProject.id = 'btn-add-project';
     btnAddProject.textContent = '+ Add New Project';
 
+
     // Display Add new project modal
     btnAddProject.addEventListener('click', () => {
         Utility.toggleModal(projectModal);
@@ -59,8 +60,9 @@ export const createPageLayout = () => {
     const btnAddTask = document.createElement('button');
     const tasksList = document.createElement('ul');
     tasksTitle.classList.add('section-title');
-    tasksTitle.textContent = 'Tasks:';
+    tasksTitle.textContent = 'Tasks for Default Project:';
     tasksSection.id = 'tasks-section';
+    tasksTitle.id = 'tasks-title';
     tasksList.id = 'tasks-list';
     btnAddTask.id = 'btn-add-task';
     btnAddTask.textContent = '+ Add New Task';
@@ -203,6 +205,9 @@ export const createPageLayout = () => {
         // Refresh the project list
         Utility.refreshProjectsDisplay();
 
+        // Refresh the task list
+        Utility.refreshTasksDisplay();
+
         // Toggle off the project modal
         Utility.toggleModal(projectModal);
     });
@@ -260,4 +265,6 @@ export const createPageLayout = () => {
         projectModalBtnContainer
     );
     footer.append(copyrightInfo);
+
+
 };
